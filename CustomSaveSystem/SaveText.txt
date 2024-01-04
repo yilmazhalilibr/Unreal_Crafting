@@ -1,8 +1,8 @@
 [
-	"Name:RightArm|Translation: X=-1174.000 Y=-316.000 Z=102.000 Rotation: P=0.000000 Y=0.000000 R=0.000000 Scale X=1.000 Y=1.000 Z=1.000",
-	"Name:Ramp|Translation: X=-972.000 Y=-243.000 Z=100.000 Rotation: P=0.000000 Y=0.000000 R=0.000000 Scale X=1.000 Y=1.000 Z=1.000",
-	"Name:Stair|Translation: X=69.000 Y=-79.000 Z=90.000 Rotation: P=0.000000 Y=-179.999802 R=0.000000 Scale X=1.000 Y=1.000 Z=1.000",
-	"Name:LeftArm|Translation: X=287.000 Y=989.000 Z=26.000 Rotation: P=0.000000 Y=0.000000 R=0.000000 Scale X=1.000 Y=1.000 Z=1.000",
-	"Name:Ramp|Translation: X=955.000 Y=-516.000 Z=105.000 Rotation: P=0.000000 Y=0.000000 R=0.000000 Scale X=1.000 Y=1.000 Z=1.000",
-	"Name:Stair|Translation: X=225.000 Y=-898.000 Z=105.000 Rotation: P=0.000000 Y=0.000000 R=0.000000 Scale X=1.000 Y=1.000 Z=1.000"
+	"|RightArm|Translation: X=-1174.000 Y=-316.000 Z=102.000 Rotation: P=0.000000 Y=0.000000 R=0.000000 Scale X=1.000 Y=1.000 Z=1.000",
+	"|Ramp|Translation: X=-972.000 Y=-243.000 Z=100.000 Rotation: P=0.000000 Y=0.000000 R=0.000000 Scale X=1.000 Y=1.000 Z=1.000",
+	"|Stair|Translation: X=69.000 Y=-79.000 Z=90.000 Rotation: P=0.000000 Y=-179.999802 R=0.000000 Scale X=1.000 Y=1.000 Z=1.000",
+	"|LeftArm|Translation: X=287.000 Y=989.000 Z=26.000 Rotation: P=0.000000 Y=0.000000 R=0.000000 Scale X=1.000 Y=1.000 Z=1.000",
+	"|Ramp|Translation: X=955.000 Y=-516.000 Z=105.000 Rotation: P=0.000000 Y=0.000000 R=0.000000 Scale X=1.000 Y=1.000 Z=1.000",
+	"|Stair|Translation: X=225.000 Y=-898.000 Z=105.000 Rotation: P=0.000000 Y=0.000000 R=0.000000 Scale X=1.000 Y=1.000 Z=1.000"
 ]

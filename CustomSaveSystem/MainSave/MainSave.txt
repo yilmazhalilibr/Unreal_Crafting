@@ -1,0 +1,1 @@
+\CustomSaveSystem\SaveTextLocation.txt\CustomSaveSystem\SaveTextRotation.txt\CustomSaveSystem\SaveTextScale.txt

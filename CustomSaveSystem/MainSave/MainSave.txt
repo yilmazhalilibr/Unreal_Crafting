@@ -2,5 +2,13 @@
 	"frst",
 	"frstLocation.txt",
 	"frstRotation.txt",
-	"frstScale.txt"
+	"frstScale.txt",
+	"sesesese",
+	"seseseseLocation.txt",
+	"seseseseRotation.txt",
+	"seseseseScale.txt",
+	"stress",
+	"stressLocation.txt",
+	"stressRotation.txt",
+	"stressScale.txt"
 ]

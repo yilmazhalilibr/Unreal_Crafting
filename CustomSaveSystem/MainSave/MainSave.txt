@@ -1,14 +1,14 @@
 [
-	"save1",
-	"save1Location.txt",
-	"save1Rotation.txt",
-	"save1Scale.txt",
-	"sese1234",
-	"sese1234Location.txt",
-	"sese1234Rotation.txt",
-	"sese1234Scale.txt",
-	"v",
-	"vLocation.txt",
-	"vRotation.txt",
-	"vScale.txt"
+	"1",
+	"1Location.txt",
+	"1Rotation.txt",
+	"1Scale.txt",
+	"2",
+	"2Location.txt",
+	"2Rotation.txt",
+	"2Scale.txt",
+	"3",
+	"3Location.txt",
+	"3Rotation.txt",
+	"3Scale.txt"
 ]

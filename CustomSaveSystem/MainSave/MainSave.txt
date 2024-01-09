@@ -1,14 +1,10 @@
 [
-	"frst",
-	"frstLocation.txt",
-	"frstRotation.txt",
-	"frstScale.txt",
-	"sesesese",
-	"seseseseLocation.txt",
-	"seseseseRotation.txt",
-	"seseseseScale.txt",
-	"stress",
-	"stressLocation.txt",
-	"stressRotation.txt",
-	"stressScale.txt"
+	"save1",
+	"save1Location.txt",
+	"save1Rotation.txt",
+	"save1Scale.txt",
+	"sese1234",
+	"sese1234Location.txt",
+	"sese1234Rotation.txt",
+	"sese1234Scale.txt"
 ]

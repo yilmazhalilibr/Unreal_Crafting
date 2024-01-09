@@ -6,5 +6,9 @@
 	"sese1234",
 	"sese1234Location.txt",
 	"sese1234Rotation.txt",
-	"sese1234Scale.txt"
+	"sese1234Scale.txt",
+	"v",
+	"vLocation.txt",
+	"vRotation.txt",
+	"vScale.txt"
 ]

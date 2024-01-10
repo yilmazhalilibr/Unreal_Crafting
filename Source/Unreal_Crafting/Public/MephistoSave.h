@@ -15,8 +15,9 @@ class UNREAL_CRAFTING_API UMephistoSave : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 	UFUNCTION(BlueprintCallable, Category = "Mephisto Save")
-	bool WriteFile(FString Path, FString Data);
+	static bool WriteFile(FString Path, FString Data);
 
-
+	UFUNCTION(BlueprintCallable, Category = "Mephisto Save")
+	static FString ReadFile(FString Path);
 
 };

@@ -30,10 +30,36 @@ bool UMephistoSave::WriteFile(FString Path, FString data)
 		writeFile.close();
 		return true;
 	}
-	else {
+	else 
+	{
 		return false;
 	}
 
+}
+
+FString UMephistoSave::ReadFile(FString Path)
+{
+	std::string path = ConvertFStringToStdString(Path);
+	std::ifstream readFile(path);
+	if (readFile.is_open())
+	{
+		readFile.seekg(0, std::ios::beg);
+
+		std::string data;
+		while (readFile >> data)
+		{
+			FString newData = ConvertStdStringToFString(data);
+			return newData;
+		}
+
+		readFile.close();
+	}
+	else {
+		return FString();
+
+	}
+
+	return FString();
 }
 
 

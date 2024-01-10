@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
-#include "tuple"
 #include "MephistoSave.generated.h"
 
 /**
@@ -16,8 +15,8 @@ class UNREAL_CRAFTING_API UMephistoSave : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 	UFUNCTION(BlueprintCallable, Category = "Mephisto Save")
-	bool WriteFile(FString data);
-	UFUNCTION(BlueprintCallable, Category = "Mephisto Save")
-	std::tuple<bool, struct> ReadFile();
+	bool WriteFile(FString Path, FString Data);
+
+
 
 };

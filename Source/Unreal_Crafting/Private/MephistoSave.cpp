@@ -2,4 +2,40 @@
 
 
 #include "MephistoSave.h"
+#include <fstream>
+#include <string>
+#include <tuple>
+
+std::string ConvertFStringToStdString(const FString& InFString)
+{
+	std::string Result(TCHAR_TO_UTF8(*InFString));
+	return Result;
+}
+
+FString ConvertStdStringToFString(const std::string& InStdString)
+{
+	FString Result = FString(UTF8_TO_TCHAR(InStdString.c_str()));
+	return Result;
+}
+
+bool UMephistoSave::WriteFile(FString Path, FString data)
+{
+	std::string path = ConvertFStringToStdString(Path);
+	std::string outData = ConvertFStringToStdString(data);
+
+	std::ofstream writeFile(path);
+
+	if (writeFile.is_open()) {
+		writeFile << outData;
+		writeFile.close();
+		return true;
+	}
+	else {
+		return false;
+	}
+
+}
+
+
+
 

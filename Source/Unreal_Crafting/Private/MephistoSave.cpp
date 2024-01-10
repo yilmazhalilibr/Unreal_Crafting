@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "MephistoSave.h"
@@ -18,50 +18,44 @@ FString ConvertStdStringToFString(const std::string& InStdString)
 	return Result;
 }
 
-bool UMephistoSave::WriteFile(FString Path, FString data)
+FString UMephistoSave::ReadFile(const FString& Directory, const FString& FileName, FString& OutData)
 {
-	std::string path = ConvertFStringToStdString(Path);
-	std::string outData = ConvertFStringToStdString(data);
+	FString FullPath = FPaths::Combine(Directory, FileName);
 
-	std::ofstream writeFile(path);
+	TArray<uint8> FileData;
+	if (!FFileHelper::LoadFileToArray(FileData, *FullPath))
+	{
+		return FString(TEXT("DATA READS FAIL"));
+	}
 
-	if (writeFile.is_open()) {
-		writeFile << outData;
-		writeFile.close();
+	OutData = FString(UTF8_TO_TCHAR(FileData.GetData()));
+
+	return OutData;
+}
+
+FString UMephistoSave::GetFileDirectory()
+{
+	FString path = FPaths::ProjectDir();
+	return path;
+}
+
+
+
+bool UMephistoSave::WriteFile(const FString& Directory, const FString& FileName, const FString& Data)
+{
+	FString FullPath = FPaths::Combine(Directory, FileName);
+
+	std::string OutData = TCHAR_TO_UTF8(*Data);
+	std::string PathFileName = TCHAR_TO_UTF8(*FullPath);
+
+	std::ofstream WriteFile(PathFileName);
+
+	if (WriteFile.is_open()) {
+		WriteFile << OutData;
+		WriteFile.close();
 		return true;
 	}
-	else 
-	{
+	else {
 		return false;
 	}
-
 }
-
-FString UMephistoSave::ReadFile(FString Path)
-{
-	std::string path = ConvertFStringToStdString(Path);
-	std::ifstream readFile(path);
-	if (readFile.is_open())
-	{
-		readFile.seekg(0, std::ios::beg);
-
-		std::string data;
-		while (readFile >> data)
-		{
-			FString newData = ConvertStdStringToFString(data);
-			return newData;
-		}
-
-		readFile.close();
-	}
-	else {
-		return FString();
-
-	}
-
-	return FString();
-}
-
-
-
-

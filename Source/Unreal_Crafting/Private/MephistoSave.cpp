@@ -22,40 +22,49 @@ FString UMephistoSave::ReadFile(const FString& Directory, const FString& FileNam
 {
 	FString FullPath = FPaths::Combine(Directory, FileName);
 
-	TArray<uint8> FileData;
-	if (!FFileHelper::LoadFileToArray(FileData, *FullPath))
+	TArray<uint8> SerializedData;
+	if (!FFileHelper::LoadFileToArray(SerializedData, *FullPath))
 	{
-		return FString(TEXT("DATA READS FAIL"));
+		FString out = "Fail read";
+		return out;
 	}
 
-	OutData = FString(UTF8_TO_TCHAR(FileData.GetData()));
+	OutData = Deserialize(SerializedData);
 
 	return OutData;
+}
+
+bool UMephistoSave::WriteFile(const FString& Directory, const FString& FileName, const FString& Data)
+{
+	TArray<uint8> SerializedData = Serialize(Data);
+
+	FString FullPath = FPaths::Combine(Directory, FileName);
+
+
+	return FFileHelper::SaveArrayToFile(SerializedData, *FullPath);
+}
+
+TArray<uint8> UMephistoSave::Serialize(const FString& Data)
+{
+	TArray<uint8> SerializedData;
+
+	TArray<uint8> DataArray((uint8*)Data.GetCharArray().GetData(), Data.Len() * sizeof(TCHAR));
+
+	SerializedData += DataArray;
+	return SerializedData;
+}
+
+FString UMephistoSave::Deserialize(const TArray<uint8>& SerializedData)
+{
+	FString DeserializedData;
+
+	DeserializedData = FString((TCHAR*)SerializedData.GetData(), SerializedData.Num() / sizeof(TCHAR));
+
+	return DeserializedData;
 }
 
 FString UMephistoSave::GetFileDirectory()
 {
 	FString path = FPaths::ProjectDir();
 	return path;
-}
-
-
-
-bool UMephistoSave::WriteFile(const FString& Directory, const FString& FileName, const FString& Data)
-{
-	FString FullPath = FPaths::Combine(Directory, FileName);
-
-	std::string OutData = TCHAR_TO_UTF8(*Data);
-	std::string PathFileName = TCHAR_TO_UTF8(*FullPath);
-
-	std::ofstream WriteFile(PathFileName);
-
-	if (WriteFile.is_open()) {
-		WriteFile << OutData;
-		WriteFile.close();
-		return true;
-	}
-	else {
-		return false;
-	}
 }

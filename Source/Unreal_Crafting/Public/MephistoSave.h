@@ -20,6 +20,11 @@ class UNREAL_CRAFTING_API UMephistoSave : public UBlueprintFunctionLibrary
 	UFUNCTION(BlueprintCallable, Category = "Mephisto Save")
 	static FString ReadFile(const FString& Directory, const FString& FileName, FString& OutData);
 
+	UFUNCTION(BlueprintCallable, Category = "Mephisto Save")
+	static TArray<uint8> Serialize(const FString& Data);
+
+	UFUNCTION(BlueprintCallable, Category = "Mephisto Save")
+	static FString Deserialize(const TArray<uint8>& SerializedData);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Mephisto Save")
 	static FString GetFileDirectory();

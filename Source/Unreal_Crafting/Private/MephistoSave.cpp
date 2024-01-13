@@ -57,23 +57,21 @@ bool UMephistoSave::WriteFile(const FString& Directory, const FString& FileName,
 	}
 }
 
-FString UMephistoSave::GetFileDirectory()
+FString UMephistoSave::GetFileDirectory(FString CombinePath)
 {
-	FString path = FPaths::ProjectDir();
-	return path;
+	FString combine = FPaths::Combine(FPaths::ProjectDir() + CombinePath);
+	return combine;
 }
 
 
-TArray<uint8>  UMephistoSave::SerializeActor(AActor* MyActor)
+TArray<uint8>  UMephistoSave::Serializeable(AActor* MyActor)
 {
 	TArray<uint8> SerializedData;
 
 	if (MyActor)
 	{
-		// Bellek üzerinde yazma işlemi için FMemoryWriter kullanılır
 		FMemoryWriter MemoryWriter(SerializedData);
 
-		// Actor'ün adını ve transform bilgilerini serialize et
 		FString ActorName = MyActor->GetName();
 		FTransform ActorTransform = MyActor->GetTransform();
 		TArray<FName> ActorTags = MyActor->Tags;
@@ -83,7 +81,6 @@ TArray<uint8>  UMephistoSave::SerializeActor(AActor* MyActor)
 		MemoryWriter << ActorTransform;
 		MemoryWriter << ActorTags;
 
-		// Serialize işlemini bitir
 		MemoryWriter.Close();
 	}
 
@@ -92,19 +89,25 @@ TArray<uint8>  UMephistoSave::SerializeActor(AActor* MyActor)
 }
 
 
-void UMephistoSave::DeserializeActor(const TArray<uint8>& SerializedData)
+void UMephistoSave::Deserializeable(const TArray<uint8>& SerializedData)
 {
 
-	// Bellek üzerinden okuma işlemi için FMemoryReader kullanılır
 	FMemoryReader MemoryReader(SerializedData, true);
-	// Sınıf tipini, adını ve transform bilgilerini deserialize et
+
 	FString ActorName;
 	FTransform ActorTransform;
 	TArray<FName> CurrentTags;
+
 	MemoryReader << ActorName;
 	MemoryReader << ActorTransform;
 	MemoryReader << CurrentTags;
-	// Deserialize işlemini bitir
+
 	MemoryReader.Close();
+
+
 }
 
+std::tuple<int, int> MyFnc()
+{
+
+}

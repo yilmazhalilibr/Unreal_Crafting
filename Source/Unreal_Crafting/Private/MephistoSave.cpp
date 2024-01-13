@@ -57,25 +57,6 @@ bool UMephistoSave::WriteFile(const FString& Directory, const FString& FileName,
 	}
 }
 
-TArray<uint8> UMephistoSave::Serializeable(const FString& Data)
-{
-	TArray<uint8> SerializedData;
-
-	TArray<uint8> DataArray((uint8*)Data.GetCharArray().GetData(), Data.Len() * sizeof(TCHAR));
-
-	SerializedData += DataArray;
-	return SerializedData;
-}
-
-FString UMephistoSave::Deserializeable(const TArray<uint8>& SerializedData)
-{
-	FString DeserializedData;
-
-	DeserializedData = FString((TCHAR*)SerializedData.GetData(), SerializedData.Num() / sizeof(TCHAR));
-
-	return DeserializedData;
-}
-
 FString UMephistoSave::GetFileDirectory()
 {
 	FString path = FPaths::ProjectDir();
@@ -85,61 +66,45 @@ FString UMephistoSave::GetFileDirectory()
 
 TArray<uint8>  UMephistoSave::SerializeActor(AActor* MyActor)
 {
+	TArray<uint8> SerializedData;
 
-	if (!MyActor)
+	if (MyActor)
 	{
-		UE_LOG(LogTemp, Error, TEXT("Null (boş) bir AActor nesnesi gönderildi."));
-		return TArray<uint8>();
+		// Bellek üzerinde yazma işlemi için FMemoryWriter kullanılır
+		FMemoryWriter MemoryWriter(SerializedData);
+
+		// Actor'ün adını ve transform bilgilerini serialize et
+		FString ActorName = MyActor->GetName();
+		FTransform ActorTransform = MyActor->GetTransform();
+		TArray<FName> ActorTags = MyActor->Tags;
+
+
+		MemoryWriter << ActorName;
+		MemoryWriter << ActorTransform;
+		MemoryWriter << ActorTags;
+
+		// Serialize işlemini bitir
+		MemoryWriter.Close();
 	}
 
-	FBufferArchive Ar;
+	return SerializedData;
 
-	//// Burada MyActor'ü yazmak için Ar kullanılır
-	Ar << MyActor;
-
-	// Son olarak, Ar'ın bellek içeriğini kullanarak TArray<uint8> oluşturulur
-	TArray<uint8> OutData;
-	OutData.Append(Ar.GetData(), Ar.Num());
-	//FString name = MyActor->GetName();
-	//UE_LOG(LogTemp, Error, TEXT("%s"), *name);
-
-
-	return OutData;
 }
 
-AActor* UMephistoSave::DeserializeActor(UWorld* World, const TArray<uint8>& SerializedData)
+
+void UMephistoSave::DeserializeActor(const TArray<uint8>& SerializedData)
 {
-	if (!World)
-	{
-		UE_LOG(LogTemp, Error, TEXT("UWorld geçerli değil."));
-		return nullptr;
-	}
 
-	// Bellek içeriğini okumak için FMemoryReader kullanılır
-	FMemoryReader Ar(SerializedData, true);
-
-	AActor* NewActor = World->SpawnActor<AActor>();
-
-	if (NewActor)
-	{
-		// Burada NewActor'ü okumak için Ar kullanılır
-		Ar << NewActor;
-	}
-	else
-	{
-		UE_LOG(LogTemp, Error, TEXT("Yeni bir AActor örneği oluşturulamadı."));
-	}
-
-	return NewActor;
+	// Bellek üzerinden okuma işlemi için FMemoryReader kullanılır
+	FMemoryReader MemoryReader(SerializedData, true);
+	// Sınıf tipini, adını ve transform bilgilerini deserialize et
+	FString ActorName;
+	FTransform ActorTransform;
+	TArray<FName> CurrentTags;
+	MemoryReader << ActorName;
+	MemoryReader << ActorTransform;
+	MemoryReader << CurrentTags;
+	// Deserialize işlemini bitir
+	MemoryReader.Close();
 }
 
-
-bool UMephistoSave::SWriteFile(const FString& FilePath, const TArray<uint8>& Data)
-{
-	return FFileHelper::SaveArrayToFile(Data, *FilePath);
-}
-
-bool UMephistoSave::SReadFile(const FString& FilePath, TArray<uint8>& OutData)
-{
-	return FFileHelper::LoadFileToArray(OutData, *FilePath);
-}

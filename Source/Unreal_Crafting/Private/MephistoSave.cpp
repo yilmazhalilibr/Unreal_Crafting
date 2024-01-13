@@ -92,16 +92,16 @@ TArray<uint8>  UMephistoSave::SerializeActor(AActor* MyActor)
 		return TArray<uint8>();
 	}
 
-	//FBufferArchive Ar;
+	FBufferArchive Ar;
 
 	//// Burada MyActor'ü yazmak için Ar kullanılır
-	//Ar << MyActor;
+	Ar << MyActor;
 
-	//// Son olarak, Ar'ın bellek içeriğini kullanarak TArray<uint8> oluşturulur
+	// Son olarak, Ar'ın bellek içeriğini kullanarak TArray<uint8> oluşturulur
 	TArray<uint8> OutData;
-	//OutData.Append(Ar.GetData(), Ar.Num());
-	FString name = MyActor->GetName();
-	UE_LOG(LogTemp, Error, TEXT("%s"), *name);
+	OutData.Append(Ar.GetData(), Ar.Num());
+	//FString name = MyActor->GetName();
+	//UE_LOG(LogTemp, Error, TEXT("%s"), *name);
 
 
 	return OutData;

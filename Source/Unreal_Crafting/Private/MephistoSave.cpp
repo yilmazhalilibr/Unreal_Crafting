@@ -38,7 +38,6 @@ FString UMephistoSave::BytesArrayConvertToString(TArray<uint8> data)
 	return OutString;
 }
 
-// Yardımcı bir fonksiyon: Bytes dizisini FString'e dönüştürme
 FString UMephistoSave::StringFromBytes(const TArray<uint8>& Bytes)
 {
 	return FString(reinterpret_cast<const TCHAR*>(Bytes.GetData()), Bytes.Num());
@@ -192,28 +191,22 @@ bool UMephistoSave::WriteDataToFile(const FString& Directory, const FString& Fil
 {
 	FString FullPath = FPaths::Combine(Directory, FileName);
 
-	// Dosyayı yazma işlemi
 	IPlatformFile& PlatformFile = FPlatformFileManager::Get().GetPlatformFile();
 
-	// Binary dosyayı yazma modunda açma
 	IFileHandle* FileHandle = PlatformFile.OpenWrite(*FullPath, true);
 	if (FileHandle)
 	{
-		// Verileri dosyaya yazma
 		for (const FString& Line : Data)
 		{
 			FString LineWithNewLine = Line + TEXT("\n");
 			FileHandle->Write(reinterpret_cast<const uint8*>(*LineWithNewLine), LineWithNewLine.Len());
 		}
 
-		// Dosyayı kapatma
 		delete FileHandle;
 
-		// Dosya başarıyla kaydedildi
 		return true;
 	}
 
-	// Dosya açılamadı veya yazma hatası oluştu
 	return false;
 }
 
@@ -223,33 +216,54 @@ TArray<FString> UMephistoSave::ReadDataFromFile(const FString& Directory, const 
 
 	FString FullPath = FPaths::Combine(Directory, FileName);
 
-	// Dosyayı okuma işlemi
 	IPlatformFile& PlatformFile = FPlatformFileManager::Get().GetPlatformFile();
 
-	// Binary dosyasını okuma modunda açma
 	IFileHandle* FileHandle = PlatformFile.OpenRead(*FullPath);
 	if (FileHandle)
 	{
-		// Dosyayı tamamen okuma işlemi
 		uint32 FileSize = FileHandle->Size();
 		TArray<uint8> FileContent;
 		FileContent.SetNumUninitialized(FileSize);
 		FileHandle->Read(FileContent.GetData(), FileSize);
 
-		// Dosyayı kapatma
 		delete FileHandle;
 
-		// Dosyadan okunan veriyi FString'e dönüştürme
 		FString FileContentStr = FString(reinterpret_cast<const TCHAR*>(FileContent.GetData()), FileSize);
 
-		// FString'i satırlara ayırma
 		TArray<FString> Lines;
 		FileContentStr.ParseIntoArrayLines(Lines, true);
 
-		// Okunan satırları çıktı olarak döndürme
 		ReadData = MoveTemp(Lines);
 	}
 
 	return ReadData;
 }
-
+///
+//bool UMephistoSave::SaveStructToFile(const FString& FilePath, const FMyStruct& Data)
+//{
+//	FString FileContent = FString::Printf(TEXT("%s\n%d\n"), *Data.Name, Data.Age);
+//
+//	return FFileHelper::SaveStringToFile(FileContent, *FilePath);
+//}
+//
+//
+//
+//bool UMephistoSave::LoadStructFromFile(const FString& FilePath, FMyStruct& OutData)
+//{
+//	FString FileContent;
+//	if (FFileHelper::LoadFileToString(FileContent, *FilePath))
+//	{
+//		TArray<FString> Lines;
+//		FileContent.ParseIntoArrayLines(Lines, true);
+//
+//		if (Lines.Num() == 2)
+//		{
+//			OutData.Name = Lines[0];
+//			OutData.Age = FCString::Atoi(*Lines[1]);
+//
+//			return true;
+//		}
+//	}
+//
+//	return false;
+//}

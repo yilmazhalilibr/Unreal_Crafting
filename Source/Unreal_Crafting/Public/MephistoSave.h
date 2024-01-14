@@ -9,6 +9,23 @@
 /**
  *
  */
+//
+//USTRUCT(BlueprintType)
+//struct FMyStruct
+//{
+//	GENERATED_BODY()
+//
+//	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+//	FString Name;
+//
+//	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+//	int32 Age;
+//
+//	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+//	TArray<TArray<uint8>> ArrayList;
+//};
+
+
 UCLASS()
 class UNREAL_CRAFTING_API UMephistoSave : public UBlueprintFunctionLibrary
 {
@@ -43,5 +60,11 @@ class UNREAL_CRAFTING_API UMephistoSave : public UBlueprintFunctionLibrary
 	UFUNCTION(BlueprintCallable, Category = "Mephisto Save")
 	static TArray<FString> ReadDataFromFile(const FString& Directory, const FString& FileName);
 
+		///////
+	UFUNCTION(BlueprintCallable, Category = "MyStructHelper")
+	static bool SaveStructToFile(const FString& FilePath, const FMyStruct& Data);
+
+	UFUNCTION(BlueprintCallable, Category = "MyStructHelper")
+	static bool LoadStructFromFile(const FString& FilePath, FMyStruct& OutData);
 
 };

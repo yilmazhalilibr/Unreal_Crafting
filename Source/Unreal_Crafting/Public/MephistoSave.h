@@ -16,6 +16,11 @@ class UNREAL_CRAFTING_API UMephistoSave : public UBlueprintFunctionLibrary
 
 	UFUNCTION(BlueprintCallable, Category = "Mephisto Save")
 	static bool WriteFile(const FString& Directory, const FString& FileName, const FString& Data);
+	
+	UFUNCTION(BlueprintCallable, Category = "Mephisto Save")
+	static FString BytesArrayConvertToString(TArray<uint8> data);
+
+	static FString StringFromBytes(const TArray<uint8>& Bytes);
 
 	UFUNCTION(BlueprintCallable, Category = "Mephisto Save")
 	static FString ReadFile(const FString& Directory, const FString& FileName, FString& OutData);
@@ -25,8 +30,18 @@ class UNREAL_CRAFTING_API UMephistoSave : public UBlueprintFunctionLibrary
 
 	UFUNCTION(BlueprintCallable, Category = "Mephisto Save")
 	static TArray<uint8> Serializeable(AActor* MyActor);
+	
+	UFUNCTION(BlueprintCallable, Category = "Mephisto Save")
+	static TArray<uint8> Serializeables(TArray<AActor*> MyActors);
 
 	UFUNCTION(BlueprintCallable, Category = "Mephisto Save")
-	static void Deserializeable(const TArray<uint8>& SerializedData);
+	static AActor* Deserializeable(TArray<UClass*> classType, UWorld* World, const TArray<uint8>& SerializedData);
+
+	UFUNCTION(BlueprintCallable, Category = "Mephisto Save")
+	static bool WriteDataToFile(const FString& Directory, const FString& FileName, const TArray<FString>& Data);
+
+	UFUNCTION(BlueprintCallable, Category = "Mephisto Save")
+	static TArray<FString> ReadDataFromFile(const FString& Directory, const FString& FileName);
+
 
 };

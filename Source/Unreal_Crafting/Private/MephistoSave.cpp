@@ -132,8 +132,8 @@ AActor* UMephistoSave::Deserializeable(TArray<UClass*> classType, UWorld* World,
 
 	for (UClass* classData : classType)
 	{
-
-		if (classData->GetName().Contains("RightArm"))
+		
+		if (classData->GetName().Contains(ActorName))
 		{
 
 			UE_LOG(LogTemp, Warning, TEXT("Success"));

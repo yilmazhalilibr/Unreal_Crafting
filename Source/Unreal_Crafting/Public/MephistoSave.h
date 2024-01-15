@@ -61,10 +61,10 @@ class UNREAL_CRAFTING_API UMephistoSave : public UBlueprintFunctionLibrary
 	static TArray<FString> ReadDataFromFile(const FString& Directory, const FString& FileName);
 
 		///////
-	UFUNCTION(BlueprintCallable, Category = "MyStructHelper")
+	/*UFUNCTION(BlueprintCallable, Category = "MyStructHelper")
 	static bool SaveStructToFile(const FString& FilePath, const FMyStruct& Data);
 
 	UFUNCTION(BlueprintCallable, Category = "MyStructHelper")
-	static bool LoadStructFromFile(const FString& FilePath, FMyStruct& OutData);
+	static bool LoadStructFromFile(const FString& FilePath, FMyStruct& OutData);*/
 
 };

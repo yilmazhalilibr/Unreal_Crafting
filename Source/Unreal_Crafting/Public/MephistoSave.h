@@ -9,21 +9,30 @@
 /**
  *
  */
-//
-//USTRUCT(BlueprintType)
-//struct FMyStruct
-//{
-//	GENERATED_BODY()
-//
-//	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-//	FString Name;
-//
-//	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-//	int32 Age;
-//
-//	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-//	TArray<TArray<uint8>> ArrayList;
-//};
+ //
+ //USTRUCT(BlueprintType)
+ //struct FMyStruct
+ //{
+ //	GENERATED_BODY()
+ //
+ //	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+ //	FString Name;
+ //
+ //	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+ //	int32 Age;
+ //
+ //	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+ //	TArray<TArray<uint8>> ArrayList;
+ //};
+
+USTRUCT(BlueprintType)
+struct FS_BytesArrayList
+{
+	GENERATED_BODY()
+	
+	UPROPERTY(BlueprintReadWrite)
+	TArray<uint8> DataArray;
+};
 
 
 UCLASS()
@@ -33,7 +42,7 @@ class UNREAL_CRAFTING_API UMephistoSave : public UBlueprintFunctionLibrary
 
 	UFUNCTION(BlueprintCallable, Category = "Mephisto Save")
 	static bool WriteFile(const FString& Directory, const FString& FileName, const FString& Data);
-	
+
 	UFUNCTION(BlueprintCallable, Category = "Mephisto Save")
 	static FString BytesArrayConvertToString(TArray<uint8> data);
 
@@ -47,7 +56,7 @@ class UNREAL_CRAFTING_API UMephistoSave : public UBlueprintFunctionLibrary
 
 	UFUNCTION(BlueprintCallable, Category = "Mephisto Save")
 	static TArray<uint8> Serializeable(AActor* MyActor);
-	
+
 	UFUNCTION(BlueprintCallable, Category = "Mephisto Save")
 	static TArray<uint8> Serializeables(TArray<AActor*> MyActors);
 
@@ -55,16 +64,20 @@ class UNREAL_CRAFTING_API UMephistoSave : public UBlueprintFunctionLibrary
 	static AActor* Deserializeable(TArray<UClass*> classType, UWorld* World, const TArray<uint8>& SerializedData);
 
 	UFUNCTION(BlueprintCallable, Category = "Mephisto Save")
+	static void DeserializeableList(TArray<UClass*> classType, UWorld* World, const  TArray<FS_BytesArrayList>& SerializedData);
+
+
+	UFUNCTION(BlueprintCallable, Category = "Mephisto Save")
 	static bool WriteDataToFile(const FString& Directory, const FString& FileName, const TArray<FString>& Data);
 
 	UFUNCTION(BlueprintCallable, Category = "Mephisto Save")
 	static TArray<FString> ReadDataFromFile(const FString& Directory, const FString& FileName);
 
-		///////
-	/*UFUNCTION(BlueprintCallable, Category = "MyStructHelper")
-	static bool SaveStructToFile(const FString& FilePath, const FMyStruct& Data);
+	///////
+/*UFUNCTION(BlueprintCallable, Category = "MyStructHelper")
+static bool SaveStructToFile(const FString& FilePath, const FMyStruct& Data);
 
-	UFUNCTION(BlueprintCallable, Category = "MyStructHelper")
-	static bool LoadStructFromFile(const FString& FilePath, FMyStruct& OutData);*/
+UFUNCTION(BlueprintCallable, Category = "MyStructHelper")
+static bool LoadStructFromFile(const FString& FilePath, FMyStruct& OutData);*/
 
 };

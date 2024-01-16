@@ -42,6 +42,7 @@ FString UMephistoSave::StringFromBytes(const TArray<uint8>& Bytes)
 {
 	return FString(reinterpret_cast<const TCHAR*>(Bytes.GetData()), Bytes.Num());
 }
+
 ////////////////////
 
 FString UMephistoSave::ReadFile(const FString& Directory, const FString& FileName, FString& OutData)
@@ -86,6 +87,7 @@ FString UMephistoSave::GetFileDirectory(FString CombinePath)
 
 TArray<uint8>  UMephistoSave::Serializeable(AActor* MyActor)
 {
+
 	TArray<uint8> SerializedData;
 
 	if (MyActor)
@@ -101,7 +103,7 @@ TArray<uint8>  UMephistoSave::Serializeable(AActor* MyActor)
 		MemoryWriter << ActorTransform;
 		MemoryWriter << ActorTags;
 
-		UE_LOG(LogTemp, Warning, TEXT("Name %s"), *ActorName);
+		//UE_LOG(LogTemp, Warning, TEXT("Name %s"), *ActorName);
 
 		MemoryWriter.Close();
 	}
@@ -113,6 +115,8 @@ TArray<uint8>  UMephistoSave::Serializeable(AActor* MyActor)
 
 AActor* UMephistoSave::Deserializeable(TArray<UClass*> classType, UWorld* World, const TArray<uint8>& SerializedData)
 {
+	AActor* SpawnedActor = nullptr;
+
 
 	FMemoryReader MemoryReader(SerializedData, true);
 
@@ -127,11 +131,10 @@ AActor* UMephistoSave::Deserializeable(TArray<UClass*> classType, UWorld* World,
 	MemoryReader.Close();
 
 
-	AActor* SpawnedActor = nullptr;
 
 	for (UClass* classData : classType)
 	{
-		
+
 		if (classData->GetName().Contains(ActorName))
 		{
 
@@ -158,6 +161,63 @@ AActor* UMephistoSave::Deserializeable(TArray<UClass*> classType, UWorld* World,
 	//}
 
 	return SpawnedActor;
+}
+
+void UMephistoSave::DeserializeableList(TArray<UClass*> classType, UWorld* World,const TArray<FS_BytesArrayList>& SerializedData)
+{
+	AActor* SpawnedActor = nullptr;
+
+	TArray<TArray<uint8>> AllData;
+
+
+	for (TArray<uint8> firstList : AllData)
+	{
+
+		FMemoryReader MemoryReader(firstList, true);
+
+		FString ActorName;
+		FTransform ActorTransform;
+		TArray<FName> CurrentTags;
+
+		MemoryReader << ActorName;
+		MemoryReader << ActorTransform;
+		MemoryReader << CurrentTags;
+
+		MemoryReader.Close();
+
+		for (UClass* classData : classType)
+		{
+
+			if (classData->GetName().Contains(ActorName))
+			{
+
+				UE_LOG(LogTemp, Warning, TEXT("Success"));
+
+				SpawnedActor = World->GetWorld()->SpawnActor<AActor>(classData);
+
+				SpawnedActor->SetActorLabel(ActorName);
+				SpawnedActor->SetActorTransform(ActorTransform);
+				SpawnedActor->Tags = CurrentTags;
+
+				break;
+			}
+			UE_LOG(LogTemp, Warning, TEXT("Failed To ClassData"));
+			// Örneğin, ekrana yazdırmak için:
+
+			//UE_LOG(LogTemp, Warning, TEXT("Byte Value: %u"), ByteValue);
+		}
+	}
+
+
+
+	//if (SpawnedActor)
+	//{
+	//	SpawnedActor->SetActorLabel(ActorName);
+	//	SpawnedActor->SetActorTransform(ActorTransform);
+	//	SpawnedActor->Tags = CurrentTags;
+	//}
+
+	//return SpawnedActor;
 }
 
 
@@ -238,6 +298,7 @@ TArray<FString> UMephistoSave::ReadDataFromFile(const FString& Directory, const 
 
 	return ReadData;
 }
+
 ///
 //bool UMephistoSave::SaveStructToFile(const FString& FilePath, const FMyStruct& Data)
 //{

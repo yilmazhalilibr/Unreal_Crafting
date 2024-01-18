@@ -163,17 +163,15 @@ AActor* UMephistoSave::Deserializeable(TArray<UClass*> classType, UWorld* World,
 	return SpawnedActor;
 }
 
-void UMephistoSave::DeserializeableList(TArray<UClass*> classType, UWorld* World,const TArray<FS_BytesArrayList>& SerializedData)
+void UMephistoSave::DeserializeableList(TArray<UClass*> classType, UWorld* World, const TArray<FS_BytesArrayList>& SerializedData)
 {
 	AActor* SpawnedActor = nullptr;
 
-	TArray<TArray<uint8>> AllData;
 
-
-	for (TArray<uint8> firstList : AllData)
+	for (auto firstList : SerializedData)
 	{
 
-		FMemoryReader MemoryReader(firstList, true);
+		FMemoryReader MemoryReader(firstList.DataArray, true);
 
 		FString ActorName;
 		FTransform ActorTransform;

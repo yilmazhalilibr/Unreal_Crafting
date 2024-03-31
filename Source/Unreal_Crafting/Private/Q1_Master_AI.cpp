@@ -1,7 +1,12 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "Q1_Master_AI.h"
+#include <Kismet/GameplayStatics.h>
+#include "GameFramework/CharacterMovementComponent.h"
+#include "GameFramework/PlayerController.h"
+#include "GameFramework/Pawn.h"
+#include "AIController.h"
 
 // Sets default values
 AQ1_Master_AI::AQ1_Master_AI()
@@ -55,6 +60,7 @@ void AQ1_Master_AI::UpdateAIState()
 		Dead();
 		break;
 	default:
+		Idle();
 		break;
 	}
 }
@@ -72,15 +78,41 @@ void AQ1_Master_AI::Patrol()
 
 void AQ1_Master_AI::Follow()
 {
-	// Implement Follow state behavior here
+	// Oyuncu pawn'ını bul
+	APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
+	if (PlayerPawn)
+	{
+		AAIController* AIController = Cast<AAIController>(GetController());
+		if (AIController)
+		{
+			// Hedef oyuncu pawn'ına doğru hareket et
+			AIController->MoveToActor(PlayerPawn);
+		}
+	}
+	else
+	{
+		// Oyuncu pawn'ı bulunamadığına dair hata işleme kodu
+	}
 }
 
 void AQ1_Master_AI::Attack()
 {
 	// Implement Attack state behavior here
+
+	//
+	FString MyString = TEXT("Attacking!"); // Yazdırmak istediğiniz metin
+	float Duration = 5.0f; // Mesajın ekran üzerinde kalacağı süre (saniye cinsinden)
+	FColor Color = FColor::Green; // Mesaj rengi (isteğe bağlı)
+
+	GEngine->AddOnScreenDebugMessage(-1, Duration, Color, MyString);
 }
 
 void AQ1_Master_AI::Dead()
 {
-	// Implement Dead state behavior here
+	ACharacter::GetMovementComponent()->StopMovementImmediately();
+	GetController()->StopMovement();
+
+	// Fizik simulasyonunu başlat ve AI'ı yere düşür
+	GetMesh()->SetSimulatePhysics(true);
+	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
 }

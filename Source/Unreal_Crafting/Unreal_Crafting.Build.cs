@@ -8,7 +8,7 @@ public class Unreal_Crafting : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore" , "JsonUtilities" });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore" , "JsonUtilities" ,"AIModule"});
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 

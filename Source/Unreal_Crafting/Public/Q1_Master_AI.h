@@ -4,7 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Components/CapsuleComponent.h"
 #include "Q1_Master_AI.generated.h"
+
 
 UENUM(BlueprintType)
 enum class EAIState : uint8

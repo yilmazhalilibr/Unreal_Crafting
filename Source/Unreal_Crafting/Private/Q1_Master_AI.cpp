@@ -7,6 +7,8 @@
 #include "GameFramework/PlayerController.h"
 #include "GameFramework/Pawn.h"
 #include "AIController.h"
+#include <NavigationSystem.h>
+#include <DrawDebugHelpers.h>
 
 // Sets default values
 AQ1_Master_AI::AQ1_Master_AI()
@@ -73,18 +75,32 @@ void AQ1_Master_AI::Idle()
 
 void AQ1_Master_AI::Patrol()
 {
-	// Implement Patrol state behavior here
-	float PatrolRadius = 1000.0f;
-	FVector Origin = GetActorLocation();
-	FVector RandomDirection = FMath::VRand();
-	FVector PatrolPoint = Origin + RandomDirection * PatrolRadius;
-
-	AAIController* AIController = Cast<AAIController>(GetController());
-	if (AIController)
-	{
-		AIController->MoveToLocation(PatrolPoint);
-		GetWorld()->GetTimerManager().SetTimer(MoveTimerHandle, this, &AQ1_Master_AI::Patrol, 10.0f, false);
-	}
+	if (Controller)
+    {
+        // Rastgele bir nokta seç
+        FVector RandomPoint = UNavigationSystemV1::GetRandomPointInNavigableRadius(this, GetActorLocation(), PatrolRadius);
+        if (RandomPoint != FVector::ZeroVector)
+        {
+            // Hedefe doğru hareket et
+            AAIController* AIController = Cast<AAIController>(Controller);
+            if (AIController)
+            {
+                AIController->MoveToLocation(RandomPoint);
+            }
+            else
+            {
+                // AIController bulunamadı hatası
+            }
+        }
+        else
+        {
+            // Rastgele nokta bulunamadı hatası
+        }
+    }
+    else
+    {
+        // Controller bulunamadı hatası
+    }
 }
 
 void AQ1_Master_AI::Follow()
@@ -106,7 +122,7 @@ void AQ1_Master_AI::Follow()
 
 		FString MyString = TEXT("The player pawn not found!"); // Yazdırmak istediğiniz metin
 		float Duration = 5.0f; // Mesajın ekran üzerinde kalacağı süre (saniye cinsinden)
-		FColor Color = FColor::Green; // Mesaj rengi (isteğe bağlı)
+		FColor Color = FColor::Magenta; // Mesaj rengi (isteğe bağlı)
 
 		GEngine->AddOnScreenDebugMessage(-1, Duration, Color, MyString);
 	}
@@ -118,7 +134,7 @@ void AQ1_Master_AI::Attack()
 
 	FString MyString = TEXT("Attacking!"); // Yazdırmak istediğiniz metin
 	float Duration = 5.0f; // Mesajın ekran üzerinde kalacağı süre (saniye cinsinden)
-	FColor Color = FColor::Green; // Mesaj rengi (isteğe bağlı)
+	FColor Color = FColor::Red; // Mesaj rengi (isteğe bağlı)
 
 	GEngine->AddOnScreenDebugMessage(-1, Duration, Color, MyString);
 }
@@ -134,5 +150,5 @@ void AQ1_Master_AI::Dead()
 
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
 	GetMesh()->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
-	
+
 }

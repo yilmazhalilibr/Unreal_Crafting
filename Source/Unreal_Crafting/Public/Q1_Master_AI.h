@@ -55,4 +55,5 @@ public:
 
 	// Other AI related variables and functions can be added here
 	FTimerHandle MoveTimerHandle; // Zamanlayıcı tanımı
+	const float PatrolRadius = 1000.0f;
 };

@@ -23,7 +23,7 @@ void AFunctionTestActor::BeginPlay()
 
 }
 
-void AFunctionTestActor::CalculateExample(float x, int y, float z, float& OutputResult)
+void AFunctionTestActor::CalculateExample(float x, int y, float z, float& OutputResult, float& OutputPlus,bool& isSuccess)
 {
 	MephistoClassPtr->CalculateAllCounts(x, y, z, OutputResult);
 }

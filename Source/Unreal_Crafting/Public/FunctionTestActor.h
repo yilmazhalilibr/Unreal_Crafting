@@ -27,7 +27,7 @@ protected:
 	MephistoFunctions* MephistoClassPtr = new MephistoFunctions();
 
 	UFUNCTION(BlueprintCallable, Category = "My Functions")
-	void CalculateExample(float x, int y, float z, float& OutputResult);
+	void CalculateExample(float x, int y, float z, float& OutputResult, float& OutputPlus, bool& isSuccess);
 
 public:
 	// Called every frame

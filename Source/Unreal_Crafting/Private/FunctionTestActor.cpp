@@ -11,6 +11,11 @@ AFunctionTestActor::AFunctionTestActor()
 
 }
 
+AFunctionTestActor::~AFunctionTestActor()
+{
+	delete MephistoClassPtr;
+}
+
 // Called when the game starts or when spawned
 void AFunctionTestActor::BeginPlay()
 {
@@ -20,8 +25,7 @@ void AFunctionTestActor::BeginPlay()
 
 void AFunctionTestActor::CalculateExample()
 {
-	MephistoClass.CalculateAllCounts(1, 2, 3, ResultValue);
-
+	MephistoClassPtr->CalculateAllCounts(2, 2, 2, ResultValue);
 }
 
 // Called every frame

@@ -15,6 +15,7 @@ class UNREAL_CRAFTING_API AFunctionTestActor : public AActor
 public:
 	// Sets default values for this actor's properties
 	AFunctionTestActor();
+	~AFunctionTestActor();
 
 protected:
 	// Called when the game starts or when spawned
@@ -23,7 +24,7 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float ResultValue;
 
-	MephistoFunctions MephistoClass;
+	MephistoFunctions* MephistoClassPtr = new MephistoFunctions();
 
 	UFUNCTION(BlueprintCallable, Category = "My Functions")
 	void CalculateExample();

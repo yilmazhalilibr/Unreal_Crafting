@@ -23,9 +23,9 @@ void AFunctionTestActor::BeginPlay()
 
 }
 
-void AFunctionTestActor::CalculateExample()
+void AFunctionTestActor::CalculateExample(float x, int y, float z, float& OutputResult)
 {
-	MephistoClassPtr->CalculateAllCounts(2, 2, 2, ResultValue);
+	MephistoClassPtr->CalculateAllCounts(x, y, z, OutputResult);
 }
 
 // Called every frame

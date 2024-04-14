@@ -11,6 +11,8 @@ class UNREAL_CRAFTING_API MephistoFunctions
 {
 public:
 	MephistoFunctions();
+	MephistoFunctions(int firstValue, float& testActorValue);
+
 	~MephistoFunctions();
 
 	int const constDeger = 25;

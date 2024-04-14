@@ -21,6 +21,13 @@ void AFunctionTestActor::BeginPlay()
 {
 	Super::BeginPlay();
 
+	OperatorOverloading k = OperatorOverloading(231, 25);
+	k.Print();
+	OperatorOverloading k1(11, 11);
+	OperatorOverloading k2(-999, -999);
+	k = k1 + k2;
+	k.Print();
+
 }
 
 void AFunctionTestActor::CalculateExample(float x, int y, float z, float& OutputResult, float& OutputPlus, bool& isSuccess)
@@ -29,6 +36,11 @@ void AFunctionTestActor::CalculateExample(float x, int y, float z, float& Output
 	MephistoClassPtr->CalculateAllCounts(x, y, z, OutputResult);
 	ResultValue = MephistoClassPtr->constDeger;
 
+}
+
+void AFunctionTestActor::ReturnResult(float x, float& value)
+{
+	ResultValue = x;
 }
 
 // Called every frame

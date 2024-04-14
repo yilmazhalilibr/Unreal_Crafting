@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "MephistoFunctions.h"
+#include "OperatorOverloading.h"
 #include "FunctionTestActor.generated.h"
 
 UCLASS()
@@ -25,13 +26,15 @@ protected:
 	float ResultValue;
 
 	MephistoFunctions* MephistoClassPtr = new MephistoFunctions();
+	MephistoFunctions* MephistoClassPtr2 = new MephistoFunctions(25, ResultValue);
 
 	UFUNCTION(BlueprintCallable, Category = "My Functions")
 	void CalculateExample(float x, int y, float z, float& OutputResult, float& OutputPlus, bool& isSuccess);
 	UFUNCTION(BlueprintCallable, Category = "My Functions")
 	void CalculateExample2() { MephistoClassPtr->CalculateAllCounts(1, 2, 3, ResultValue); };
 
-
+	UFUNCTION(BlueprintCallable, Category = "My Functions")
+	void ReturnResult(float x, float& value);
 
 public:
 	// Called every frame

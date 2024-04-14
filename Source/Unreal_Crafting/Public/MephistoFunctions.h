@@ -13,6 +13,8 @@ public:
 	MephistoFunctions();
 	~MephistoFunctions();
 
+	int const constDeger = 25;
+
 	float LastProcessedValue;
 
 	void CalculateAllCounts(int x, float y, double z, float& globalValue);

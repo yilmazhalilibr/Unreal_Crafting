@@ -3,7 +3,7 @@
 
 #include "MephistoFunctions.h"
 
-MephistoFunctions::MephistoFunctions()
+MephistoFunctions::MephistoFunctions() : constDeger(555)
 {
 }
 
@@ -16,7 +16,8 @@ void MephistoFunctions::CalculateAllCounts(int x, float y, double z, float& resu
 	y = x * z;
 	y *= y;
 	result = y;
-	LastProcessedValue = result;
+	LastProcessedValue = constDeger;
+
 }
 
 

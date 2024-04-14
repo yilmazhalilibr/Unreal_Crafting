@@ -28,6 +28,10 @@ protected:
 
 	UFUNCTION(BlueprintCallable, Category = "My Functions")
 	void CalculateExample(float x, int y, float z, float& OutputResult, float& OutputPlus, bool& isSuccess);
+	UFUNCTION(BlueprintCallable, Category = "My Functions")
+	void CalculateExample2() { MephistoClassPtr->CalculateAllCounts(1, 2, 3, ResultValue); };
+
+
 
 public:
 	// Called every frame

@@ -5,6 +5,7 @@
 
 MephistoFunctions::MephistoFunctions() : constDeger(555)
 {
+
 }
 MephistoFunctions::MephistoFunctions(int firstValue, float& testActorValue)
 {

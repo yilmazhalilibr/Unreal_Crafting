@@ -28,6 +28,10 @@ void AFunctionTestActor::BeginPlay()
 	k = k1 + k2;
 	k.Print();
 
+
+	InheritanceTest InTest{ "Halil", "YILMAZ", 66 };
+	FString HappyString(InTest.GetProperties().c_str());
+	UE_LOG(LogTemp, Warning, TEXT("Inheritance Data Name: %s"), *HappyString);
 }
 
 void AFunctionTestActor::CalculateExample(float x, int y, float z, float& OutputResult, float& OutputPlus, bool& isSuccess)

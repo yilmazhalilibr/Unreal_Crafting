@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-
+#include "InheritanceTest.h"
 /**
  *
  */
@@ -15,10 +15,15 @@ public:
 
 	~MephistoFunctions();
 
+	//InheritanceTest* ChildTest = new InheritanceChild(52,"0");
+	
+
 	int const constDeger = 25;
 
 	float LastProcessedValue;
 
 	void CalculateAllCounts(int x, float y, double z, float& globalValue);
+
+
 
 };
